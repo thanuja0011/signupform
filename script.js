@@ -167,20 +167,44 @@ function validateDOB() {
 // password validation
 function validatePassword() {
   const passwordVal = $("#password").val().trim();
-  $("#passwordError").hide();
-  $("#passwordSuccess").hide();
+  const passwordError = $("#passwordError");
+  const passwordSuccess = $("#passwordSuccess");
 
-  if (passwordVal.length < 6) {
-    $("#passwordError")
-      .text("Password must be at least 6 characters")
-      .css("display", "block");
+  passwordError.hide();
+  passwordSuccess.hide();
+
+  // Checking the validations
+  if (passwordVal.length < 8) {
+    passwordError.text("Password must be at least 8 characters").show();
     $("#password").css("border", "1px solid red");
     return false;
-  } else {
-    $("#password").css("border", "1px solid green");
-    $("#passwordSuccess").show();
-    return true;
   }
+
+  if (!/[A-Z]/.test(passwordVal)) {
+    passwordError
+      .text("Password must include at least one uppercase letter")
+      .show();
+    $("#password").css("border", "1px solid red");
+    return false;
+  }
+
+  if (!/[a-z]/.test(passwordVal)) {
+    passwordError
+      .text("Password must include at least one lowercase letter")
+      .show();
+    $("#password").css("border", "1px solid red");
+    return false;
+  }
+
+  if (!/[0-9]/.test(passwordVal)) {
+    passwordError.text("Password must include at least one number").show();
+    $("#password").css("border", "1px solid red");
+    return false;
+  }
+
+  $("#password").css("border", "1px solid green");
+  passwordSuccess.show();
+  return true;
 }
 
 // show and hide functionality for password
