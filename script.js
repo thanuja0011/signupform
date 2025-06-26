@@ -64,8 +64,6 @@ function validateMobileNo() {
   MobileNoError.style.display = "none";
   MobileNoSuccess.style.display = "none";
 
-  console.log(mobileNo.value.length);
-
   if (mobileNo.value.trim().length == 0) {
     MobileNoError.innerHTML = "MobileNo is required";
     mobileNo.style.border = "1px solid red";
