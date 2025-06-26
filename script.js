@@ -42,7 +42,7 @@ function validateEmail() {
     return false;
   }
 
-  if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+  if (!email.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
     emailError.innerHTML = "Email is invalid";
     email.style.border = "1px solid red";
     emailError.style.display = "block";
