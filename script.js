@@ -54,42 +54,48 @@ function validateEmail() {
   return true;
 }
 
-// Mobile Number validation
+// Using jquery
+
+// MobileNo validation
+
+$("#mobileNo").on("input", function () {
+  let value = $(this).val().replace(/\D/g, ""); // Remove all other than digits
+  if (value.length > 10) {
+    value = value.slice(0, 10); // Limit to 10 digits
+  }
+  $(this).val(value);
+});
+
+// Validation function
 function validateMobileNo() {
-  const mobileNo = document.getElementById("mobileNo");
-  const MobileNoError = document.getElementById("MobileNoError");
-  const MobileNoSuccess = document.getElementById("MobileNoSuccess");
+  const mobileNo = $("#mobileNo").val().trim();
+  const mobileNoLength = 10;
 
-  var mobileNoLength = 10;
-  MobileNoError.style.display = "none";
-  MobileNoSuccess.style.display = "none";
+  $("#MobileNoError").hide();
+  $("#MobileNoSuccess").hide();
+  $("#mobileNo").css("border", "");
 
-  if (mobileNo.value.trim().length == 0) {
-    MobileNoError.innerHTML = "MobileNo is required";
-    mobileNo.style.border = "1px solid red";
-    MobileNoError.style.display = "block";
-    return false;
-  }
-  if (!mobileNo.value.match(/^[0-9 ]+$/)) {
-    MobileNoError.innerHTML = "MobileNo should conatin Numbers only";
-    mobileNo.style.border = "1px solid red";
-    MobileNoError.style.display = "block";
-    return false;
-  }
-  if (mobileNo.value.length !== mobileNoLength) {
-    MobileNoError.innerHTML = "MobileNo should contain 10 numbers";
-    mobileNo.style.border = "1px solid red";
-    MobileNoError.style.display = "block";
+  if (mobileNo.length === 0) {
+    $("#MobileNoError").text("Mobile number is required").show();
+    $("#mobileNo").css("border", "1px solid red");
     return false;
   }
 
-  MobileNoError.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
-  mobileNo.style.border = "1px solid green";
-  MobileNoSuccess.style.display = "block";
+  if (!/^\d{10}$/.test(mobileNo)) {
+    $("#MobileNoError").text("Mobile number must be exactly 10 digits").show();
+    $("#mobileNo").css("border", "1px solid red");
+    return false;
+  }
+
+  $("#mobileNo").css("border", "1px solid green");
+  $("#MobileNoSuccess").show();
   return true;
 }
 
-// Using jquery
+// Trigger validation on blur or form submit
+$("#mobileNo").on("blur", function () {
+  validateMobileNo();
+});
 
 //  DOB validation
 $("#DOB").datepicker({
